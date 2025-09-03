@@ -12,4 +12,4 @@
 - Unlock the documents to first search it through keywords.
 - Use open search to enable semantic search to let the user ask questions about a document.
 - Enhanced search capability will be a simple bar, but with document data extraction capability, will play a key role in navigating through all the documents which are part of the system
-join
+
