@@ -20,3 +20,4 @@
 **Plans for Next Week:**
 - Contact our sponsor
 - Set up meeting times with our advisor and sponsor
+- Prepare Team Contract
