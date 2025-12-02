@@ -9,10 +9,10 @@
 - Documentation Lead: Michelle Koh
 
 **Weekly Task Assignments & Achievements:**
-Dylan Tran: Assigning initial roles.
-Kelly Hwangpo: Prepared contact list for sponsors and project organizer.
-Jake Carduck: Set up GitHub Repository.
-Michelle Koh: Recorded minutes for the first team meeting. 
+- Dylan Tran: Assigning initial roles.
+- Kelly Hwangpo: Prepared contact list for sponsors and project organizer.
+- Jake Carduck: Set up GitHub Repository.
+- Michelle Koh: Recorded minutes for the first team meeting. 
 
 **Challenges/Issues Faced:**
 - Setting up development environment access.
