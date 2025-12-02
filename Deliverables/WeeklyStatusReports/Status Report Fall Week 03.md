@@ -17,4 +17,4 @@ Michelle Koh: Managed NDA signing process.
 - Previous project topic was discarded; pivoted to a new topic.
 
 **Plans for Next Week:**
-- Meeting with Project Director and Project Sponsor for new project details.
+- Meeting with Project Sponsor for new project details.
