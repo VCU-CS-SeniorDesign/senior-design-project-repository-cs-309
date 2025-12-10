@@ -51,10 +51,11 @@
 - Quarto
 - APIs
 
-# Project Documents:
+# Project Documents
 - https://docs.google.com/document/d/1yxtVHn4Gn5V-5ajCxIlddhHRRDZyg5187LtgZrVcfNc/edit?usp=sharing
 - https://docs.google.com/document/d/1CEB7q-_c5SmuJHKtnJDb9Hgyy6JIMW6KUvjxjFJ-Lkc/edit?usp=sharing
 - https://docs.google.com/document/d/1-goS-lZEUnFYDHunSyDIi2aU9decmYhuPEabTzP23x0/edit?usp=sharing
+- [Preliminary Report](https://docs.google.com/document/d/1888FtKfDiwHYDaa7PoqKLmUUF7wOWKmv/edit?usp=sharing&ouid=115606697901695362564&rtpof=true&sd=true)
 
 # What's Next?
 - Additional fields to collect information, then feed that info into a pretrained model.
