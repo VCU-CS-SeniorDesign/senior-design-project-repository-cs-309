@@ -1,5 +1,5 @@
 
-# CS-309 Enhanced Document Search  
+# CS-309 AI Recommender Tool  
 ### Course/Term: CMSC-451, Fall 2025
 ### Members: Jake Carduck, Michelle Koh, Kelly Hwangpo, Dylan Tran
 ### CS Advisor: Dr. Leonard
@@ -7,9 +7,7 @@
 
 # Project Summary
 
-- As documents are stored, we are able to extract information from the document using OCR.
-- Storing the document text to make it searchable will ensure that we are able to search it based on keywords first and then context later on.
-- Unlock the documents to first search it through keywords.
-- Use open search to enable semantic search to let the user ask questions about a document.
-- Enhanced search capability will be a simple bar, but with document data extraction capability, will play a key role in navigating through all the documents which are part of the system
-
+- This AI Risk Recommender Tool is a single-page web application designed to help users quickly assess and manage potential risks. 
+- Providing several inputs, for example - risk title, risk description, impacted areas, number of controls and their descriptions to mitigate the risk, numerical values for probability, control effectiveness etc., the tool calculates an adjusted risk score.
+- Categorizes the risk of input as High, Medium, or Low, providing a clear risk level and a set of actionable recommendations based on the assessment.
+- This interactive tool simplifies a key part of the risk management process, turning complex analysis into a straightforward, guided experience.
