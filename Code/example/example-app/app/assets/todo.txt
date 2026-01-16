@@ -1,0 +1,1 @@
+Replace background and logo files with actual images (see video for examples)
