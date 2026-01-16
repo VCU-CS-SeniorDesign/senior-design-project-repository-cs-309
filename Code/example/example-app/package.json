@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@datastax/astra-db-ts": "^1.1.0",
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/google-genai": "^2.1.10",
     "dotenv": "^16.4.5",
     "langchain": "^0.1.36",
     "next": "14.2.3",

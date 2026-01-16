@@ -1,7 +1,9 @@
 // followed this tutorial: https://www.youtube.com/watch?v=d-VKYF4Zow0
 import { DataAPIClient } from "@datastax/astra-db-ts"
 import { PuppeteerWebBaseLoader } from "langchain/document_loaders/web/puppeteer" // help with scraping
-import OpenAI from "openai" // used to create vector embeddings and make responses more human readable
+// used to create vector embeddings and make responses more human readable
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { TaskType } from "@google/generative-ai";
 
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 
@@ -15,10 +17,14 @@ const {
     ASTRA_DB_COLLECTION,
     ASTRA_DB_API_ENDPOINT,
     ASTRA_DB_APPLICATION_TOKEN,
-    OPENAI_API_KEY
+    GOOGLEAI_API_KEY
 } = process.env
 
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY })
+const embeddingsModel = new GoogleGenerativeAIEmbeddings({
+    apiKey: GOOGLEAI_API_KEY,
+    model: "text-embedding-004",
+    taskType: TaskType.RETRIEVAL_DOCUMENT
+})
 
 // sites to scrape for data
 const f1Data = [
@@ -39,30 +45,31 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 // create a collection in Astra database
 const createCollection = async (similarityMetric: SimilarityMetric = "dot_product") => {
-    const res = await db.createCollection(ASTRA_DB_COLLECTION, {
-        vector: {
-            // has to match OpenAI dimensions (look at documentation; we are using text-embedding-3-small)
-            dimension: 1536,
-            metric: similarityMetric
-        }
-    })
-    console.log(res)
+    try {
+        const res = await db.createCollection(ASTRA_DB_COLLECTION, {
+            vector: {
+                // has to match Google dimensions (look at documentation; we are using text-embedding-004)
+                dimension: 768,
+                metric: similarityMetric
+            }
+        })
+        console.log(res)
+    } catch (e) {
+        console.log("Collection already exists, skipping creation...")
+    }
 }
 
 // split data and get chunks, run them through model to get vectors
 const loadSampleData = async () => {
     const collection = await db.collection(ASTRA_DB_COLLECTION)
     for await ( const url of f1Data ) {
+        console.log(`Scraping: ${url}`)
         const content = await scrapePage(url)
         const chunks = await splitter.splitText(content)
-        for await ( const chunk of chunks ) {
-            const embedding = await openai.embeddings.create({
-                model: "text-embedding-3-small",
-                input: chunk,
-                encoding_format: "float"
-            })
 
-            const vector = embedding.data[0].embedding
+        for await ( const chunk of chunks ) {
+            // generate embedding using Google AI
+            const vector = await embeddingsModel.embedQuery(chunk)
 
             const res = await collection.insertOne({
                 $vector: vector,
@@ -92,6 +99,4 @@ const scrapePage = async (url: string) => {
 }
 
 
-// *******only use if no collection already exists; might want to adjust to work if collection already exists
-//createCollection().then(() => loadSampleData())
-loadSampleData()
+createCollection().then(() => loadSampleData())
