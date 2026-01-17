@@ -10,9 +10,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.0.0",
+    "@ai-sdk/react": "^3.0.0",
     "@datastax/astra-db-ts": "^1.1.0",
     "@google/generative-ai": "^0.24.1",
     "@langchain/google-genai": "^2.1.10",
+    "ai": "^3.3.0",
     "dotenv": "^16.4.5",
     "langchain": "^0.1.36",
     "next": "14.2.3",

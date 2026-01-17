@@ -17,11 +17,11 @@ const {
     ASTRA_DB_COLLECTION,
     ASTRA_DB_API_ENDPOINT,
     ASTRA_DB_APPLICATION_TOKEN,
-    GOOGLEAI_API_KEY
+    GOOGLE_GENERATIVE_AI_API_KEY
 } = process.env
 
 const embeddingsModel = new GoogleGenerativeAIEmbeddings({
-    apiKey: GOOGLEAI_API_KEY,
+    apiKey: GOOGLE_GENERATIVE_AI_API_KEY,
     model: "text-embedding-004",
     taskType: TaskType.RETRIEVAL_DOCUMENT
 })
@@ -29,7 +29,6 @@ const embeddingsModel = new GoogleGenerativeAIEmbeddings({
 // sites to scrape for data
 const f1Data = [
     'https://en.wikipedia.org/wiki/Formula_One',
-    'https://www.forumla1.com/en/latest/all',
     'https://www.formula1.com/en/racing/2024.html'
 ]
 
@@ -98,5 +97,6 @@ const scrapePage = async (url: string) => {
     return ( await loader.scrape())?.replace(/<[^>]*>?/gm, '') // strip out HTML tags from page content (it's not needed)
 }
 
-
+// comment out create collection and use drop if new collection needed for some reason (such as wrong dimensions)
+//db.dropCollection(ASTRA_DB_COLLECTION);
 createCollection().then(() => loadSampleData())

@@ -1,1 +1,4 @@
 Replace background and logo files with actual images (see video for examples)
+
+background.jpg: https://isorepublic.com/photo/abstract-gradient-background/
+f1GPTLogo.png: https://commons.wikimedia.org/wiki/File:F1.svg
