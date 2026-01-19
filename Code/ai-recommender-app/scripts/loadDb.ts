@@ -27,9 +27,9 @@ const embeddingsModel = new GoogleGenerativeAIEmbeddings({
 })
 
 // sites to scrape for data
-const f1Data = [
-    'https://en.wikipedia.org/wiki/Formula_One',
-    'https://www.formula1.com/en/racing/2024.html'
+const chatbotTrainingData = [
+    'a',
+    'a'
 ]
 
 // strict in tsconfig.json set to false so warnings aren't given
@@ -61,7 +61,7 @@ const createCollection = async (similarityMetric: SimilarityMetric = "dot_produc
 // split data and get chunks, run them through model to get vectors
 const loadSampleData = async () => {
     const collection = await db.collection(ASTRA_DB_COLLECTION)
-    for await ( const url of f1Data ) {
+    for await ( const url of chatbotTrainingData ) {
         console.log(`Scraping: ${url}`)
         const content = await scrapePage(url)
         const chunks = await splitter.splitText(content)
@@ -97,6 +97,4 @@ const scrapePage = async (url: string) => {
     return ( await loader.scrape())?.replace(/<[^>]*>?/gm, '') // strip out HTML tags from page content (it's not needed)
 }
 
-// comment out create collection and use drop if new collection needed for some reason (such as wrong dimensions)
-//db.dropCollection(ASTRA_DB_COLLECTION);
 createCollection().then(() => loadSampleData())

@@ -1,8 +1,8 @@
 import "./global.css"
 
 export const metadata = {
-    title: "F1GPT",
-    description: "The place to go for all your Formula One questions!"
+    title: "AI Recommender Chatbot",
+    description: "The place to go for all your risk related questions!"
 }
 
 const RootLayout = ({ children }) => {

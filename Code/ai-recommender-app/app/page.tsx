@@ -29,9 +29,10 @@ const Home = () => {
                 {noMessages ? (
                     <>
                         <p className="starter-text">
-                            The Ultimate place for Formula One super fans!
-                            Ask F1GPT anything about the fantastic topic of F1 racing
-                            and it will come back with the most up-to-date answers.
+                            Ask about scenarios that you worry might
+                            have risks for the company. The Chatbot
+                            will tell you if there are any actual risks
+                            and ways you can mitigate them if there are.
                             We hope you enjoy!
                         </p>
                         <br/>

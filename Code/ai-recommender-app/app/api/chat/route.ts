@@ -30,19 +30,12 @@ export async function POST(req: Request) {
 
         let docContext = ""
 
-        // turn into google
-        //const embedding = await openai.embeddings.create({
-        //    model: "text-embedding-004",
-        //    input: latestMessage,
-        //    encoding_format: "float"
-        //})
         const vector = await embeddingsModel.embedQuery(latestMessage)
 
         try {
             const collection = await db.collection(ASTRA_DB_COLLECTION)
             const cursor = collection.find(null, {
                 sort: {
-                    //$vector: embedding.data[0].embedding,
                     $vector: vector,
                 },
 // LESS CONTEXT PROVIDED
@@ -59,7 +52,7 @@ export async function POST(req: Request) {
             console.log("Error querying db...")
             docContext = ""
         }
-
+// adjust background
         const systemPrompt = `You are an AI assistant who knows everything about Formula One.
             Use the below context to augment what you know about Formula One racing.
             The context will provide you with the most recent page data from wikipedia,
@@ -78,7 +71,7 @@ export async function POST(req: Request) {
             `
 
         const response = await streamText({
-            model: google('gemini-2.0-flash') as any,
+            model: google('gemini-2.5-flash-lite') as any,
             system: systemPrompt,
             messages: messages
         })
