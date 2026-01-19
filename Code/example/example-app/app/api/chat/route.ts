@@ -30,19 +30,12 @@ export async function POST(req: Request) {
 
         let docContext = ""
 
-        // turn into google
-        //const embedding = await openai.embeddings.create({
-        //    model: "text-embedding-004",
-        //    input: latestMessage,
-        //    encoding_format: "float"
-        //})
         const vector = await embeddingsModel.embedQuery(latestMessage)
 
         try {
             const collection = await db.collection(ASTRA_DB_COLLECTION)
             const cursor = collection.find(null, {
                 sort: {
-                    //$vector: embedding.data[0].embedding,
                     $vector: vector,
                 },
 // LESS CONTEXT PROVIDED
