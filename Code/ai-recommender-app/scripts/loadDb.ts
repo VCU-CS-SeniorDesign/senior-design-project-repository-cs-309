@@ -28,10 +28,17 @@ const embeddingsModel = new GoogleGenerativeAIEmbeddings({
     taskType: TaskType.RETRIEVAL_DOCUMENT
 })
 
-// sites to scrape for data
+// sites to scrape for data (run "npm run seed" to fill database)
 const chatbotTrainingData = [
     // comment out documents already added to website (for now), otherwise duplicates will be added when run again
-    //`file://${path.resolve('../documents/matrix.html')}`
+    `file://${path.resolve('./app/documents/matrix.html')}`,
+    `file://${path.resolve('./app/documents/SR9551a2.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-asset-management.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-compliance-management-systems.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-efta.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-other-consumer-protect-laws-regs.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-privacy.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-udap-udaap.html')}`
 ]
 
 // strict in tsconfig.json set to false so warnings aren't given
