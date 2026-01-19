@@ -2,10 +2,9 @@ import PromptSuggestionButton from "./PromptSuggestionButton"
 
 const PromptSuggestionsRow = ({ onPromptClick }) => {
     const prompts = [
-        "Question 1 (add)",
-        "Question 2 (add)",
-        "Question 3 (add)",
-        "Question 4 (add)"
+        "What are the common features of a low risk score?",
+        "What are the common features of a medium/moderate risk score?",
+        "What are the common features of a high risk score?"
     ]
     
     return (

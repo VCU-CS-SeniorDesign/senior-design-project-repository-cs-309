@@ -9,6 +9,8 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 
 import "dotenv/config" // used to hide secret variables (e.g., tokens, API keys)
 
+import path from 'path';
+
 
 type SimilarityMetric = "dot_product" | "cosine" | "euclidean"
 
@@ -28,8 +30,8 @@ const embeddingsModel = new GoogleGenerativeAIEmbeddings({
 
 // sites to scrape for data
 const chatbotTrainingData = [
-    'a',
-    'a'
+    // comment out documents already added to website (for now), otherwise duplicates will be added when run again
+    //`file://${path.resolve('../documents/matrix.html')}`
 ]
 
 // strict in tsconfig.json set to false so warnings aren't given

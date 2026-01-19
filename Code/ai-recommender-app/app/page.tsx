@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import f1GPTLogo from "./assets/f1GPTLogo.png"
+import AIRecommenderLogo from "./assets/AIRecommenderLogo.png"
 import { useChat } from "ai/react"
 import { Message } from "ai"
 
@@ -24,7 +24,7 @@ const Home = () => {
 
     return (
         <main>
-            <Image src={f1GPTLogo} width="250" alt="F1GPT Logo"/>
+            <Image src={AIRecommenderLogo} width="650" alt="AI Recommender Logo"/>
             <section className={noMessages ? "" : "populated"}>
                 {noMessages ? (
                     <>
