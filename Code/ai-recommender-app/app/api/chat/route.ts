@@ -53,13 +53,12 @@ export async function POST(req: Request) {
             docContext = ""
         }
 // adjust background
-        const systemPrompt = `You are an AI assistant who knows everything about Formula One.
-            Use the below context to augment what you know about Formula One racing.
-            The context will provide you with the most recent page data from wikipedia,
-            the official F1 website, and others.
-            If the context doesn't include the information you need, answer based on
-            your existing knowledge and don't mention the source of your information or
-            what the context does or doesn't include.
+        const systemPrompt = `You are an AI assistant who knows everything about GRC (Governance, Risk, Compliance),
+            regulations, risks, and mitigations in the financial service industry. Use the below context to augment what
+            you know about the financial service industry and GRC. The context will provide you with more specific and
+            recent data from a variety of sources.
+            If the context doesn't include the information you need, answer based on your existing knowledge and don't mention 
+            the source of your information or what the context does or doesn't include.
             Format responses using markdown where applicable and don't return images.
             -----------------
             START CONTEXT
