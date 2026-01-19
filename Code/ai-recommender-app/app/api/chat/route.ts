@@ -38,8 +38,8 @@ export async function POST(req: Request) {
                 sort: {
                     $vector: vector,
                 },
-// LESS CONTEXT PROVIDED
-                limit: 10 // down from 10 due to token limits (i.e., less context provided to AI)
+            // AMOUNT OF CONTEXT PROVIDED (how many chunks for it to give to the AI)
+                limit: 10 // might want to use fewer for token limits (but that means less context is provided to the AI)
             })
 
             const documents = await cursor.toArray()
