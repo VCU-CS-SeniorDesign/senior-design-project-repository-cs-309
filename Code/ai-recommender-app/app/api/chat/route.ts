@@ -53,13 +53,15 @@ export async function POST(req: Request) {
             console.log("Error querying db...")
             docContext = ""
         }
-// adjust background
+// adjust background (need to figure out when we should have it provide a risk score)
+// If applicable, or asked for, provide a risk score (low, medium, or high) for the scenario/prompt.
         const systemPrompt = `You are an AI assistant who knows everything about GRC (Governance, Risk, Compliance),
             regulations, risks, and mitigations in the financial service industry. Use the below context to augment what
             you know about the financial service industry and GRC. The context will provide you with more specific and
             recent data from a variety of sources.
             If the context doesn't include the information you need, answer based on your existing knowledge and don't mention 
-            the source of your information or what the context does or doesn't include.
+            the source of your information or what the context does or doesn't include. Whenever possible, provide
+            a risk score (low, medium, or high) for the scenario/prompt.
             Format responses using markdown where applicable and don't return images.
             -----------------
             START CONTEXT
