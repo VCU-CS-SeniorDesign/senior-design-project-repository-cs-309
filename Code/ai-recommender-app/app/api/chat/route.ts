@@ -39,7 +39,7 @@ export async function POST(req: Request) {
                     $vector: vector,
                 },
 // LESS CONTEXT PROVIDED
-                limit: 2 // down from 10 due to token limits (i.e., less context provided to AI)
+                limit: 10 // down from 10 due to token limits (i.e., less context provided to AI)
             })
 
             const documents = await cursor.toArray()
@@ -47,6 +47,7 @@ export async function POST(req: Request) {
             const docsMap = documents?.map(doc => doc.text)
 
             docContext = JSON.stringify(docsMap)
+            console.log(`docContext: ${docContext}`)
 
         } catch (err) {
             console.log("Error querying db...")
