@@ -3,8 +3,8 @@
 # CS-309 AI Recommender Tool  
 ### Course/Term: CMSC-451, Fall 2025
 ### Members: Jake Carduck, Michelle Koh, Kelly Hwangpo, Dylan Tran
-### CS Advisor: Dr. Leonard
-### Sponsor: Lakshmi Narayana Rasalay, Capital One
+### CS Advisor: Dr. Budwell
+### Sponsor: Lakshmi Narayana Rasalay, Nabin Debnath, Capital One
 
 # Project Summary
 - This AI Risk Recommender Tool is a single-page web application designed to help users quickly assess and manage potential risks. 
