@@ -1,7 +1,7 @@
 ![Alt text](CS309Poster.png)
 
 # CS-309 AI Recommender Tool  
-### Course/Term: CMSC-451, Fall 2025
+### Course/Term: CMSC-451, Fall 2025 - Spring 2026
 ### Members: Jake Carduck, Michelle Koh, Kelly Hwangpo, Dylan Tran
 ### CS Advisor: Dr. Budwell
 ### Sponsor: Lakshmi Narayana Rasalay, Nabin Debnath, Capital One
@@ -43,6 +43,8 @@
 - Java
 - Javascript
 - HTML
+- Typescript
+- CSS
 
 # Sources
 - Kaggle
@@ -60,4 +62,4 @@
 # What's Next?
 - Additional fields to collect information, then feed that info into a pretrained model.
 - Predict risk score based on input, then generate a mitigation plan. If this risk happens, what is the next step?
-- Develop RAG Chatbot
+- Further develop and adjust the current RAG Chatbot
