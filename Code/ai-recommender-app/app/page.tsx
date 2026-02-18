@@ -29,11 +29,11 @@ const Home = () => {
                 {noMessages ? (
                     <>
                         <p className="starter-text">
-                            Ask about scenarios that you worry might
-                            have risks for the company. The Chatbot
-                            will tell you if there are any actual risks
-                            and ways you can mitigate them if there are.
-                            We hope you enjoy!
+                            Write about a scenario you want a write-up for. If possible,
+                            provide a specific title, type, and other info.
+                            Make sure to provide a description in the prompt.
+                            The Chatbot will make a write-up for the given information,
+                            using documents about various regulations for refernece.
                         </p>
                         <br/>
                         <PromptSuggestionsRow onPromptClick={handlePrompt}/>
@@ -46,7 +46,7 @@ const Home = () => {
                 )}
             </section>
             <form onSubmit={handleSubmit}>
-                <input className="question-box" onChange={handleInputChange} value={input} placeholder="Ask me something..."/>
+                <input className="question-box" onChange={handleInputChange} value={input} placeholder="Provide a description..."/>
                 <input type="submit"/>
             </form>
         </main>

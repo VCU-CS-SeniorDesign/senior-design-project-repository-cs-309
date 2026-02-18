@@ -59,16 +59,21 @@ export async function POST(req: Request) {
             regulations, risks, and mitigations in the financial service industry. Use the below context to augment what
             you know about the financial service industry and GRC. The context will provide you with more specific and
             recent data from a variety of sources.
-            If the context doesn't include the information you need, answer based on your existing knowledge and don't mention 
-            the source of your information or what the context does or doesn't include. Whenever possible, provide
-            a risk score (low, medium, or high) for the scenario/prompt.
+
+            If the context doesn't include the information you need, DO NOT use outside information; you should only EVER
+            use the information in the context provided.
             Format responses using markdown where applicable and don't return images.
+            
+            Using the information provided, create a write up with the following information and sections: 
+            title, description, and type (is this a risk, control, requirement, action/test, item/plan, etc.?) you
+            are creating a write-up for. Add additional sections/info necessary for the specific type. For example, a
+            risk would likely need a risk score (low, medium, or high) for the scenario/prompt.
             -----------------
             START CONTEXT
             ${docContext}
             END CONTEXT
             -----------------
-            QUESTION: ${latestMessage}
+            PROMPT: ${latestMessage}
             -----------------
             `
 
