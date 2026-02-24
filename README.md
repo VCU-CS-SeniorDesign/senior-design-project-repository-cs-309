@@ -54,10 +54,11 @@
 - APIs
 
 # Project Documents
-- https://docs.google.com/document/d/1yxtVHn4Gn5V-5ajCxIlddhHRRDZyg5187LtgZrVcfNc/edit?usp=sharing
-- https://docs.google.com/document/d/1CEB7q-_c5SmuJHKtnJDb9Hgyy6JIMW6KUvjxjFJ-Lkc/edit?usp=sharing
-- https://docs.google.com/document/d/1-goS-lZEUnFYDHunSyDIi2aU9decmYhuPEabTzP23x0/edit?usp=sharing
+- [CS-309 Project Research](https://docs.google.com/document/d/1yxtVHn4Gn5V-5ajCxIlddhHRRDZyg5187LtgZrVcfNc/edit?usp=sharing)
 - [Preliminary Report](https://docs.google.com/document/d/1888FtKfDiwHYDaa7PoqKLmUUF7wOWKmv/edit?usp=sharing&ouid=115606697901695362564&rtpof=true&sd=true)
+- [Capital One Questionaire Prep](https://docs.google.com/document/d/1-goS-lZEUnFYDHunSyDIi2aU9decmYhuPEabTzP23x0/edit?usp=sharing)
+- [Capital One Questions 2](https://docs.google.com/document/d/1CEB7q-_c5SmuJHKtnJDb9Hgyy6JIMW6KUvjxjFJ-Lkc/edit?usp=sharing)
+- [Chatbot Training Data](https://docs.google.com/document/d/1jqoZyB5-FcnHXCtEJPd8bSd1SozZfW8mm4E1RQkZ8QY/edit?usp=sharing)
 
 # What's Next?
 - Additional fields to collect information, then feed that info into a pretrained model.
