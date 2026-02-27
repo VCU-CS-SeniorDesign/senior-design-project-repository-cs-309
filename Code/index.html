@@ -4,128 +4,158 @@
   <meta charset="UTF-8">
   <title>Risk Recommender Tool</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
 
-    .container {
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 30px;
-      max-width: 500px;
-      width: 100%;
-    }
+  input, select, textarea, button, .risk-score {
+    font-family: inherit; 
+    box-sizing: border-box;
+  }
 
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
+  .container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+  }
 
-    textarea {
-      width: 100%;
-      height: 120px;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      resize: none;
-      font-size: 16px;
-    }
+  h1 { 
+    text-align: center; 
+    color: #2c3e50; 
+    margin-bottom: 20px;
+  }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background-color: #2c7be5;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+  label { 
+    font-weight: bold; 
+    display: block; 
+    margin-top: 15px; 
+    color: #555; 
+  }
 
-    button:hover {
-      background-color: #1a5bb8;
-    }
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
 
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 5px;
-      background-color: #f1f3f5;
-    }
+  textarea { height: 120px; resize: none; }
 
-    .risk-score {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-top: 10px;
-      color: white;
-    }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #2c7be5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
 
-    .high { background-color: #e74c3c; }
-    .medium { background-color: #f1c40f; }
-    .low { background-color: #2ecc71; }
+  button:hover { background-color: #1a5bb8; }
 
-  </style>
+  .result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f1f3f5;
+    border-left: 5px solid #2c7be5;
+  }
+
+  .risk-score {
+    display: inline-block;
+    padding: 8px 16px; 
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .high { background-color: #e74c3c; }  
+  .medium { background-color: #f1c40f; } 
+  .low { background-color: #2ecc71; }
+
+  .enhanced-text { 
+    white-space: pre-wrap; 
+    margin-top: 10px; 
+    font-size: 14px; 
+    line-height: 1.5; 
+  }
+</style>
 </head>
 <body>
 
   <div class="container">
     <h1>Risk Recommender Tool</h1>
 
-    <textarea id="userInput" placeholder="Describe the risk scenario..."></textarea>
-    <button onclick="sendInput()">Analyze Risk</button>
+    <label>Title</label>
+    <input type="text" id="title" placeholder="Enter a title...">
+
+    <label>Type</label>
+    <select id="type">
+      <option value="Risk">Risk</option>
+      <option value="Control">Control</option>
+      <option value="Requirement">Requirement</option>
+      <option value="Action Plan">Action Plan</option>
+    </select>
+
+    <label>Description</label>
+    <textarea id="description" placeholder="Describe the scenario..."></textarea>
+    
+    <button onclick="sendInput()">Analyze</button>
 
     <div class="result">
-      <p id="response">AI Response will appear here.</p>
+      <strong>Risk Analysis:</strong>
+      <div id="response" class="enhanced-text">AI Response will appear here.</div>
       <span id="riskScore" class="risk-score low">Low</span>
     </div>
   </div>
 
   <script>
     async function sendInput() {
-      const text = document.getElementById("userInput").value;
+      const title = document.getElementById("title").value;
+      const type = document.getElementById("type").value;
+      const description = document.getElementById("description").value;
 
-      if (!text.trim()) {
-        alert("Please enter a risk scenario.");
+      if (!description.trim()) {
+        alert("Please enter a description.");
         return;
       }
 
       const res = await fetch("http://localhost:8080/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: text })
+        body: JSON.stringify({ title, type, description })
       });
 
       const data = await res.json();
 
-      document.getElementById("response").innerText = data.response;
-
-      let score = "Low";
-      let scoreClass = "low";
-      if (text.toLowerCase().includes("critical") || text.toLowerCase().includes("severe")) {
-        score = "High";
-        scoreClass = "high";
-      } else if (text.toLowerCase().includes("moderate") || text.toLowerCase().includes("medium")) {
-        score = "Medium";
-        scoreClass = "medium";
-      }
+      document.getElementById("response").innerText = data.enhancedWriteup;
 
       const riskEl = document.getElementById("riskScore");
-      riskEl.innerText = score;
-      riskEl.className = "risk-score " + scoreClass;
+      const level = data.riskLevel.toLowerCase();
+
+      riskEl.innerText = data.riskLevel;
+
+      riskEl.className = "risk-score " + level;
     }
   </script>
 
