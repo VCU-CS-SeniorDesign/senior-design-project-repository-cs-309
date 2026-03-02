@@ -11,6 +11,8 @@ import "dotenv/config" // used to hide secret variables (e.g., tokens, API keys)
 
 import path from 'path';
 
+import crypto from 'crypto';
+
 
 type SimilarityMetric = "dot_product" | "cosine" | "euclidean"
 
@@ -24,21 +26,21 @@ const {
 
 const embeddingsModel = new GoogleGenerativeAIEmbeddings({
     apiKey: GOOGLE_GENERATIVE_AI_API_KEY,
-    model: "text-embedding-004",
+    model: "gemini-embedding-001",
     taskType: TaskType.RETRIEVAL_DOCUMENT
 })
 
 // sites to scrape for data (run "npm run seed" to fill database)
 const chatbotTrainingData = [
     // comment out documents already added to website (for now), otherwise duplicates will be added when run again
-    //`file://${path.resolve('./app/documents/matrix.html')}`,
-    //`file://${path.resolve('./app/documents/SR9551a2.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-asset-management.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-compliance-management-systems.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-efta.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-other-consumer-protect-laws-regs.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-privacy.html')}`,
-    //`file://${path.resolve('./app/documents/pub-ch-udap-udaap.html')}`
+    `file://${path.resolve('./app/documents/matrix.html')}`,
+    `file://${path.resolve('./app/documents/SR9551a2.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-asset-management.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-compliance-management-systems.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-efta.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-other-consumer-protect-laws-regs.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-privacy.html')}`,
+    `file://${path.resolve('./app/documents/pub-ch-udap-udaap.html')}`
 ]
 
 // strict in tsconfig.json set to false so warnings aren't given
@@ -47,17 +49,17 @@ const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE })
 
 // how we split up scraped data
 const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 512, // number of characters in each chunk
-    chunkOverlap: 100 // number of overlapping characters between chunks (preserves cross-chunk context)
+    chunkSize: 1000, // number of characters in each chunk
+    chunkOverlap: 200 // number of overlapping characters between chunks (preserves cross-chunk context)
 })
 
 // create a collection in Astra database
-const createCollection = async (similarityMetric: SimilarityMetric = "dot_product") => {
+const createCollection = async (similarityMetric: SimilarityMetric = "cosine") => {
     try {
         const res = await db.createCollection(ASTRA_DB_COLLECTION, {
             vector: {
                 // has to match Google dimensions (look at documentation; we are using text-embedding-004)
-                dimension: 768,
+                dimension: 3072,
                 metric: similarityMetric
             }
         })
@@ -70,12 +72,41 @@ const createCollection = async (similarityMetric: SimilarityMetric = "dot_produc
 // split data and get chunks, run them through model to get vectors
 const loadSampleData = async () => {
     const collection = await db.collection(ASTRA_DB_COLLECTION)
+
     for await ( const url of chatbotTrainingData ) {
         console.log(`Scraping: ${url}`)
         const content = await scrapePage(url)
         const chunks = await splitter.splitText(content)
 
-        for await ( const chunk of chunks ) {
+        const lastChunk = chunks[chunks.length - 1];
+        console.log(`LAST SENTENCE IN DB: "...${lastChunk.slice(-100)}"`);
+
+        const vectors = await embeddingsModel.embedDocuments(chunks);
+
+        const dataToInsert = chunks.map((chunk, index) => {
+            // prevent repeated document text (i.e., if the document is scraped twice)
+            const hashId = crypto.createHash("sha256").update(chunk).digest("hex");
+
+            return {
+                _id: hashId,
+                $vector: vectors[index],
+                text: chunk,
+                metadata: {
+                    source: url,
+                    lastUpdated: new Date().toISOString()
+                }
+            }
+        });
+
+        try {
+            const res = await collection.insertMany(dataToInsert, { ordered: false });
+            console.log(`Inserted ${res.insertedCount} items.`);
+        } catch (e) {
+            console.log("Skipped duplicates or handled upserts.");
+        }
+
+        // embeds one line at a time; replaced to embed all lines of document (fewer requests needed then)
+        /* for await ( const chunk of chunks ) {
             // generate embedding using Google AI
             const vector = await embeddingsModel.embedQuery(chunk)
 
@@ -84,23 +115,20 @@ const loadSampleData = async () => {
                 text: chunk
             })
             console.log(res)
-        }
+        } */
     }
 }
 
 
 const scrapePage = async (url: string) => {
     const loader = new PuppeteerWebBaseLoader(url, {
-        launchOptions: {
-            headless: true // means no GUI
-        },
+        launchOptions: { headless: "new" },
         gotoOptions: {
-            waitUntil: "domcontentloaded"
+            waitUntil: "networkidle0", // Wait for all data to finish downloading
         },
-        evaluate: async (page, browser) => {
-            const result = await page.evaluate(() => document.body.innerHTML)
-            await browser.close()
-            return result
+        evaluate: async (page) => {
+            await page.waitForSelector('body'); 
+            return await page.evaluate(() => document.body.innerText); // Use innerText, not innerHTML
         }
     })
     return ( await loader.scrape())?.replace(/<[^>]*>?/gm, '') // strip out HTML tags from page content (it's not needed)

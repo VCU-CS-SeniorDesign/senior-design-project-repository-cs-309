@@ -15,7 +15,8 @@ const {
 
 const embeddingsModel = new GoogleGenerativeAIEmbeddings({
     apiKey: GOOGLE_GENERATIVE_AI_API_KEY,
-    model: "text-embedding-004",
+    //model: "text-embedding-004", (deprecated)
+    model: "gemini-embedding-001",
     taskType: TaskType.RETRIEVAL_QUERY
 })
 
