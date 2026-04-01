@@ -27,6 +27,7 @@ const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE })
 export async function POST(req: Request) {
     try {
         const { messages } = await req.json()
+        // !!!!!!!!!!!!!!  ToDo: add additional code to connect other inputs besides description to this
         const latestMessage = messages[messages?.length - 1].content
 
         let docContext = ""
@@ -65,10 +66,12 @@ export async function POST(req: Request) {
             use the information in the context provided.
             Format responses using markdown where applicable and don't return images.
             
-            Using the information provided, create a write up with the following information and sections: 
-            title, description, and type (is this a risk, control, requirement, action/test, item/plan, etc.?) you
-            are creating a write-up for. Add additional sections/info necessary for the specific type. For example, a
-            risk would likely need a risk score (low, medium, or high) for the scenario/prompt.
+            Using the information provided, generate a risk score (low, medium, or high; low means little risk, which is good)
+            and provide mitigation steps/methods that can be taken to reduce risk and improve the risk score. Make sure to
+            consider risk mitigation steps and controls that are already in place, which will be in the user prompt if any
+            exist (they will likely improve (lower) the risk score). Clearly seperate the risk score from the mitigation
+            methods. If possible, try to group controls help users better strategize what they can do to reduce risk. Moreover,
+            include an additional section regarding existing controls IF the controls need to be changed, adjusted, or removed.
             -----------------
             START CONTEXT
             ${docContext}
