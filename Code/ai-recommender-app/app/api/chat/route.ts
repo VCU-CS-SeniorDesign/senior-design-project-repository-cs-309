@@ -27,7 +27,7 @@ const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE })
 export async function POST(req: Request) {
     try {
         const { messages } = await req.json()
-        // !!!!!!!!!!!!!!  ToDo: add additional code to connect other inputs besides description to this
+        // page.tsx combines the different field inputs into one string, so it is already all included
         const latestMessage = messages[messages?.length - 1].content
 
         let docContext = ""
