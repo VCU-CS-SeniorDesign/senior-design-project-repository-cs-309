@@ -37,7 +37,7 @@
 - Emphasize governance, risk, and compliance ensures accountability in industrial industries.
 
 # Technical Design Implementation: 
-= Document-driven RAG system (organization inputs documents) 
+- Document-driven RAG system (organization inputs documents) 
 - Cleans + normalizes text (PDF/Doc/etc.)
 - Splits the text into chunks Generates embeddings for each chunk
 - Stores embeddings + metadata in a vector database User inputs query → converts to an embedding
