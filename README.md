@@ -1,4 +1,4 @@
-![Alt text](CS_26-309_SpringPoster.png)
+![Alt text](CS26-309_SpringPoster.png)
 
 # CS-309 AI Recommender Tool  
 ### Course/Term: CMSC-451, Fall 2025 - Spring 2026
