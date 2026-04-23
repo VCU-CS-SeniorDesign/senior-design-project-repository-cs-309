@@ -13,7 +13,6 @@ const Home = () => {
     const { append, isLoading, messages } = useChat()
 
     const [title, setTitle] = useState("")
-    const [type, setType] = useState("Risk")
     const [description, setDescription] = useState("")
     const [mitigation, setMitigation] = useState("")
 
@@ -34,7 +33,7 @@ const Home = () => {
             alert("Please enter a description.")
             return
         }
-        const combined = `Title: ${title}\nType: ${type}\nDescription: ${description}\nExisting Mitigation Actions: ${mitigation}`
+        const combined = `Title: ${title}\nDescription: ${description}\nExisting Mitigation Actions: ${mitigation}`
         const msg: Message = {
             id: crypto.randomUUID(),
             content: combined,
@@ -42,7 +41,6 @@ const Home = () => {
         }
         append(msg)
         setTitle("")
-        setType("Risk")
         setDescription("")
         setMitigation("")
     }
@@ -72,33 +70,17 @@ const Home = () => {
             </section>
             <form onSubmit={handleFormSubmit}>
                 <div className="form-fields">
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <input
-                                id="title"
-                                className="field-input"
-                                type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Enter a title..."
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="type">Type</label>
-                            <select
-                                id="type"
-                                className="field-input"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
-                            >
-                                <option value="Risk">Risk</option>
-                                <option value="Control">Control</option>
-                                <option value="Requirement">Requirement</option>
-                                <option value="Action Plan">Action Plan</option>
-                            </select>
-                        </div>
-                    </div>
+                    <div className="form-group full-width">
+                        <label htmlFor="title">Title</label>
+                        <input
+                            id="title"
+                            className="field-input"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="Enter a title..."
+                        />
+                    </div>                    
                     <div className="form-group full-width">
                         <label htmlFor="description">Description</label>
                         <textarea
