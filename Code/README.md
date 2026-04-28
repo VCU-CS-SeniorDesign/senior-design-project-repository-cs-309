@@ -23,6 +23,9 @@
   * index.html - tool's frontend.
   * Main.java - handles contexts/routing.
 
+**Database and AI**
+For our database, we used an Astra database (https://astra.datastax.com/) with 3072 dimensions and a cosine similarity metric, through AWS. For our two AI models, we used Google AI Studio; using the API key we created there, we were able to use gemini-embedding-001 for creating embeddings (both for the database and for the user prompt we were comparing to embeddings in the database) and gemini-2.5-flash-lite (the generative AI model).
+
 **Adding Documents**
 In order to add documents to the database, make sure they are HTML. Then, add a link to the HTML site OR HTML file in repo to loadDb.ts.
 
