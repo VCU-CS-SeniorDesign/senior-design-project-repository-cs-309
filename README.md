@@ -77,4 +77,4 @@ Finding the documents
 	- What documents can be used to indirectly train the AI for testing (since actual GRC data is proprietary)? 
 Finding and running the right AI 
 	- Most offer few free tokens
-	- Running the initial AI setup takes several minutes 	with our hardware and open-source AI for just a few documents
+	- Running the initial AI setup takes several minutes with our hardware and open-source AI for just a few documents
